@@ -1,8 +1,8 @@
 import React, { Component } from "react"
 import { Link } from "react-router-dom"
-import Books from "../components/Books";
-import * as BooksAPI from "../BooksAPI";
-import PropTypes from "prop-types";
+import Books from "../components/Books"
+import * as BooksAPI from "../BooksAPI"
+import PropTypes from "prop-types"
 
 class AddBookPage extends Component {
 

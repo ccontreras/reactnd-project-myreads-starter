@@ -1,6 +1,6 @@
 import React from 'react'
-import PropTypes from "prop-types";
-import Book from "./Book";
+import PropTypes from "prop-types"
+import Book from "./Book"
 
 const Books = ({ books, onBookChange }) => {
     const booksMarkup = books.map((book, index) => <li key={index}><Book book={book} onBookChange={onBookChange} /></li>)
