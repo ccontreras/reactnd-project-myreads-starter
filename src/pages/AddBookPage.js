@@ -2,8 +2,14 @@ import React, { Component } from "react"
 import { Link } from "react-router-dom"
 import Books from "../components/Books";
 import * as BooksAPI from "../BooksAPI";
+import PropTypes from "prop-types";
 
 class AddBookPage extends Component {
+
+    static propTypes = {
+        shelfMapper: PropTypes.func.isRequired,
+        onBookChange: PropTypes.func,
+    }
 
     state = {
         books: [],
@@ -22,7 +28,7 @@ class AddBookPage extends Component {
         BooksAPI.search(query, 10).then(books => {
             this.setState({
                 searching: false,
-                books: books ? books : [],
+                books: books ? this.props.shelfMapper(books).apply() : [],
             })
         })
     }
@@ -46,7 +52,7 @@ class AddBookPage extends Component {
                     </div>
                 </div>
                 <div className="search-books-results">
-                    <Books books={this.state.books} />
+                    <Books books={this.state.books} onBookChange={this.props.onBookChange} />
                 </div>
             </div>
         )

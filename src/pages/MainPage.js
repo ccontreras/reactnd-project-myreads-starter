@@ -1,29 +1,19 @@
 import React, { Component } from "react"
 import { Link } from "react-router-dom"
 import Bookshelf from '../components/Bookshelf'
-import * as BooksAPI from '../BooksAPI'
+import PropTypes from "prop-types";
 
 class MainPage extends Component {
 
-    state = {
-        books: [],
+    static propTypes = {
+        currentlyReading: PropTypes.array.isRequired,
+        wantToRead: PropTypes.array.isRequired,
+        read: PropTypes.array.isRequired,
+        onBookChange: PropTypes.func,
     }
 
-    componentDidMount() {
-        BooksAPI.getAll().then((books) => this.setState({ books }))
-    }
-
-    handleBookChange = (book) => {
-        this.setState((state) => ({
-            books: state.books.map((b) => ((b.id === book.id) ? book : b))
-        }))
-    }
-
-    render() {
-        const { books } = this.state
-        const currentlyReadingBooks = books.filter((book) => book.shelf === 'currentlyReading')
-        const wantToReadBooks = books.filter((book) => book.shelf === 'wantToRead')
-        const readBooks = books.filter((book) => book.shelf === 'read')
+    render()    {
+        const { currentlyReading, wantToRead, read, onBookChange } = this.props
 
         return (
             <div className="list-books">
@@ -32,9 +22,9 @@ class MainPage extends Component {
                 </div>
                 <div className="list-books-content">
                     <div>
-                        <Bookshelf title='Currently Reading' books={currentlyReadingBooks} onBookChange={this.handleBookChange} />
-                        <Bookshelf title='Want to Read' books={wantToReadBooks} onBookChange={this.handleBookChange} />
-                        <Bookshelf title='Read' books={readBooks} onBookChange={this.handleBookChange} />
+                        <Bookshelf title='Currently Reading' books={currentlyReading} onBookChange={onBookChange} />
+                        <Bookshelf title='Want to Read' books={wantToRead} onBookChange={onBookChange} />
+                        <Bookshelf title='Read' books={read} onBookChange={onBookChange} />
                     </div>
                 </div>
                 <div className="open-search">

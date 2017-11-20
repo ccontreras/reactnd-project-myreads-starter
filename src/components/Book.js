@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import * as BooksAPI from '../BooksAPI'
 import PropTypes from "prop-types";
 import BookshelfChanger from "./BookshelfChanger";
 
@@ -11,11 +10,11 @@ class Book extends Component {
     }
 
     handleShelfChange = (shelf) => {
-        const { book, onBookChange } = this.props
-        BooksAPI.update(book, shelf).then((response) => {
-            book.shelf = shelf
-            onBookChange(book)
-        })
+        const { onBookChange, book } = this.props
+        if (onBookChange) {
+            const oldShelf = book.shelf
+            onBookChange(book, oldShelf, shelf)
+        }
     }
 
     render() {
